@@ -1,16 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>Meu site</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro</title>
 </head>
-<body>
-    <h1>Olá! 👋</h1>
-    <p>Esta página está sendo servida pelo Flask.</p>
 
-    <button onclick="alert('Funcionou! 🚀')">
-        Clique aqui
+<body>
+    <h1>📋 Registro</h1>
+
+    <p>
+        Para continuar, você pode permitir o acesso à sua localização.
+    </p>
+
+    <button onclick="pedirLocalizacao()">
+        📍 Permitir localização
     </button>
+
+    <p id="resultado"></p>
+
+    <script>
+        function pedirLocalizacao() {
+            const resultado = document.getElementById("resultado");
+
+            if (!navigator.geolocation) {
+                resultado.innerText =
+                    "Seu navegador não suporta localização.";
+                return;
+            }
+
+            resultado.innerText = "Solicitando permissão...";
+
+            navigator.geolocation.getCurrentPosition(
+                function(posicao) {
+                    const latitude = posicao.coords.latitude;
+                    const longitude = posicao.coords.longitude;
+
+                    resultado.innerHTML =
+                        "✅ Permissão concedida.<br>" +
+                        "Localização obtida pelo navegador.";
+                },
+                function(erro) {
+                    resultado.innerText =
+                        "❌ A permissão de localização foi negada ou não está disponível.";
+                }
+            );
+        }
+    </script>
 </body>
 </html>
 
