@@ -3,50 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Cadastro</title>
 </head>
-
 <body>
-    <h1>📋 Registro</h1>
+
+    <h1>Cadastro</h1>
+
+    <label>
+        Nome:
+        <input type="text" id="nome">
+    </label>
+
+    <br><br>
 
     <p>
-        Para continuar, você pode permitir o acesso à sua localização.
+        Para continuar, você pode permitir que este site
+        acesse sua localização.
     </p>
 
-    <button onclick="pedirLocalizacao()">
-        📍 Permitir localização
+    <button id="localizacao">
+        Permitir localização
     </button>
 
-    <p id="resultado"></p>
+    <p id="status"></p>
 
     <script>
-        function pedirLocalizacao() {
-            const resultado = document.getElementById("resultado");
+        const botao = document.getElementById("localizacao");
+        const status = document.getElementById("status");
 
+        botao.addEventListener("click", () => {
             if (!navigator.geolocation) {
-                resultado.innerText =
-                    "Seu navegador não suporta localização.";
+                status.textContent =
+                    "Seu navegador não oferece geolocalização.";
                 return;
             }
 
-            resultado.innerText = "Solicitando permissão...";
+            status.textContent =
+                "Solicitando permissão de localização...";
 
             navigator.geolocation.getCurrentPosition(
-                function(posicao) {
-                    const latitude = posicao.coords.latitude;
-                    const longitude = posicao.coords.longitude;
+                (posicao) => {
+                    const precisao =
+                        Math.round(posicao.coords.accuracy);
 
-                    resultado.innerHTML =
-                        "✅ Permissão concedida.<br>" +
-                        "Localização obtida pelo navegador.";
+                    status.textContent =
+                        "Localização permitida. Precisão aproximada: "
+                        + precisao + " metros.";
                 },
-                function(erro) {
-                    resultado.innerText =
-                        "❌ A permissão de localização foi negada ou não está disponível.";
+                () => {
+                    status.textContent =
+                        "A localização não foi autorizada.";
                 }
             );
-        }
+        });
     </script>
+
 </body>
 </html>
-
