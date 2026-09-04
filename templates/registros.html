@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registros</title>
+</head>
+
+<body>
+
+    <h1>Registros de cadastro</h1>
+
+    {% if registros %}
+        <table border="1" cellpadding="8">
+            <tr>
+                <th>Data</th>
+                <th>Nome</th>
+                <th>Latitude</th>
+                <th>Longitude</th>
+            </tr>
+
+            {% for registro in registros %}
+            <tr>
+                <td>{{ registro.data }}</td>
+                <td>{{ registro.nome }}</td>
+                <td>{{ registro.latitude }}</td>
+                <td>{{ registro.longitude }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <p>Nenhum registro encontrado.</p>
+    {% endif %}
+
+</body>
+</html>
